@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>A Little Universe, Just for You</title>
+  <meta name="description" content="Some things are worth taking a quiet moment for.">
+  <meta name="theme-color" content="#050507">
+  <meta name="color-scheme" content="dark">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!--
+    Link preview (WhatsApp, iMessage...).
+    After publishing, replace BOTH occurrences of the og:image / twitter:image
+    value with the ABSOLUTE url, e.g.
+    https://your-user.github.io/a-little-universe/assets/og-image.jpg
+    (WhatsApp ignores relative paths.) See README, section 5.
+  -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="A Little Universe, Just for You">
+  <meta property="og:description" content="Some things are worth taking a quiet moment for.">
+  <meta property="og:image" content="assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="assets/og-image.jpg">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <!-- The moon is the first thing on screen: fetch it before anything else. -->
+  <link rel="preload" as="image" href="assets/moon.webp"
+        imagesrcset="assets/moon-720.webp 720w, assets/moon.webp 1200w"
+        imagesizes="(max-width: 600px) 80vw, 440px" type="image/webp" fetchpriority="high">
+  <link rel="preload" as="font" href="assets/fonts/newsreader.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="assets/fonts/newsreader-italic.woff2" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+</head>
+<body>
+  <!-- Very sparse starfield, drawn by script.js. Purely decorative. -->
+  <canvas class="sky" aria-hidden="true"></canvas>
+
+  <main>
+    <!-- ============ 1. Beginning ============ -->
+    <header class="intro" id="top">
+      <p class="intro__kicker">A little universe, just for you</p>
+
+      <h1 class="intro__title">
+        <span class="intro__line">I have something</span>
+        <span class="intro__line intro__line--italic">to show you.</span>
+      </h1>
+
+      <p class="intro__subtitle">Some things are worth taking a quiet moment for.</p>
+
+      <div class="moon-stage">
+        <button class="moon" type="button" aria-controls="letter" aria-expanded="false">
+          <span class="moon__halo" aria-hidden="true"></span>
+          <picture class="moon__picture">
+            <source type="image/webp"
+                    srcset="assets/moon-720.webp 720w, assets/moon.webp 1200w"
+                    sizes="(max-width: 600px) 80vw, 440px">
+            <img class="moon__img" src="assets/moon.jpg" width="1200" height="1200"
+                 alt="" decoding="async" fetchpriority="high" draggable="false">
+          </picture>
+          <span class="visually-hidden moon__label">Touch the moon to open the letter</span>
+        </button>
+      </div>
+
+      <p class="intro__hint" id="moon-hint" aria-hidden="true">Touch the moon</p>
+    </header>
+
+    <!-- ============ 2. Development: the letter ============ -->
+    <article class="letter" id="letter" aria-labelledby="letter-title">
+      <span class="letter__beam" aria-hidden="true"></span>
+
+      <h2 class="visually-hidden" id="letter-title" tabindex="-1">A letter for you</h2>
+
+      <!--
+        The poem is reproduced exactly as written by its author.
+        Each stanza is a <p>; each verse is a <span class="verse">.
+      -->
+      <div class="poem">
+        <p class="stanza reveal">
+          <span class="verse">Of all the things God has placed upon this earth,</span>
+          <span class="verse">I never imagined I would find something</span>
+          <span class="verse">that could make me feel so much.</span>
+        </p>
+
+        <p class="stanza reveal">
+          <span class="verse">The stars may light up the darkest skies,</span>
+          <span class="verse">and the moon may make the night feel beautiful,</span>
+          <span class="verse">but somehow, you make me feel something</span>
+          <span class="verse">that even the heavens cannot explain.</span>
+        </p>
+
+        <p class="stanza reveal">
+          <span class="verse">I don't know what Heaven looks like,</span>
+          <span class="verse">nor can I imagine what eternity feels like.</span>
+          <span class="verse">But if I could spend forever by your side,</span>
+          <span class="verse">I think I would understand both.</span>
+        </p>
+
+        <p class="stanza reveal">
+          <span class="verse">Because if God gave me the choice</span>
+          <span class="verse">between all the wonders He has ever created</span>
+          <span class="verse">and one more moment with you,</span>
+          <span class="verse">I would choose you.</span>
+        </p>
+      </div>
+
+      <!-- ============ 3. Conclusion ============ -->
+      <section class="finale" aria-label="The last words">
+        <p class="declaration">
+          <span class="declaration__line">Every time.</span>
+          <span class="declaration__line">In every lifetime.</span>
+          <span class="declaration__line">Without a second thought.<span class="rose"><span class="visually-hidden"> 🌹</span><svg class="rose__art" viewBox="0 0 40 96" aria-hidden="true" focusable="false">
+            <!-- A single rose in fine line. Each stroke draws itself in order (see --d). -->
+            <g class="rose__stem">
+              <path pathLength="1" style="--d:0" class="rose__long" d="M19 93 C21.2 70, 19.6 50, 20 33"/>
+              <path pathLength="1" style="--d:.9" d="M20.4 60 C23.5 55, 29 52.5, 34 52.8 C31.2 57.6, 26 61, 20.4 60 Z"/>
+              <path pathLength="1" style="--d:1.3" class="rose__fine" d="M20.4 60 C25 57.2, 29.5 55, 34 52.8"/>
+              <path pathLength="1" style="--d:.5" d="M20.5 72.5 C21.7 71.9, 22.7 71.1, 23.5 69.9"/>
+              <path pathLength="1" style="--d:.3" d="M19.9 82.5 C18.8 81.9, 17.8 80.9, 17.2 79.7"/>
+              <path pathLength="1" style="--d:1.1" d="M20 32.8 C17.6 31.2, 15.9 28.6, 15.5 25.4"/>
+              <path pathLength="1" style="--d:1.1" d="M20 33 C22.8 33.4, 25.2 34.8, 26.6 37.4"/>
+              <path pathLength="1" style="--d:1.1" d="M20 33 C18.3 33.7, 16.8 35, 15.9 36.8"/>
+            </g>
+            <g class="rose__bloom">
+              <path pathLength="1" style="--d:1.4" d="M20 33 C13.5 31.5, 10.6 25.5, 11.4 19 C11.9 15.2, 13.2 12.8, 15.4 11.6 C14.4 13.4, 14.6 15.2, 15.8 16.6"/>
+              <path pathLength="1" style="--d:1.4" d="M20 33 C26.4 31.6, 29.4 25.6, 28.6 19 C28.2 15.6, 27 13.2, 25.2 12 C25.7 13.8, 25.4 15.4, 24.4 16.6"/>
+              <path pathLength="1" style="--d:1.9" d="M12.4 22.4 C16.2 20.2, 21.8 16.6, 27.6 14.6"/>
+              <path pathLength="1" style="--d:2.1" d="M16.4 18.6 C16.4 11.8, 19 7.2, 22.4 5.4 C24 7.6, 24.9 10.6, 24.6 15.4"/>
+              <path pathLength="1" style="--d:2.4" class="rose__fine" d="M18.6 13.6 C20 11.2, 22.2 9.8, 24.5 9.6"/>
+            </g>
+          </svg></span></span>
+        </p>
+
+        <footer class="signature">
+          <img class="signature__mark" src="assets/moon-mark.webp" width="48" height="48" alt="" loading="lazy">
+          <!-- Change the signature here. -->
+          <p class="signature__name">Gabriel Vinicius Krebski</p>
+        </footer>
+      </section>
+    </article>
+  </main>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
