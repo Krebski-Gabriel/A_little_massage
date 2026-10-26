@@ -259,6 +259,35 @@ img { display: block; max-width: 100%; height: auto; }
   50%      { opacity: 0.5; }
 }
 
+/* Watercolour: translucent silver washes (assets/moon-wash.webp, made by
+   tools/make_wash.py) sit BEHIND the photo, so they only show around the
+   disc. On touch they spread outwards like pigment carried by water. */
+@property --wash-r {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 48%;
+}
+.moon__wash {
+  position: absolute;
+  inset: -35%;           /* 1.7 x the moon, as the texture was painted */
+  pointer-events: none;
+  background: url("assets/moon-wash.webp") center / 100% 100% no-repeat;
+  opacity: 0;
+  transform: scale(0.9) rotate(-5deg);
+  --wash-r: 48%;
+  -webkit-mask-image: radial-gradient(circle closest-side, #000 calc(var(--wash-r) - 16%), transparent var(--wash-r));
+  mask-image: radial-gradient(circle closest-side, #000 calc(var(--wash-r) - 16%), transparent var(--wash-r));
+  transition:
+    opacity 1.2s var(--ease-soft),
+    transform 2.8s var(--ease-out),
+    --wash-r 2.6s var(--ease-out);
+}
+.moon.is-lit .moon__wash {
+  opacity: 0.95;
+  transform: none;
+  --wash-r: 120%;
+}
+
 .moon__picture,
 .moon__img {
   position: relative;
@@ -393,26 +422,25 @@ img { display: block; max-width: 100%; height: auto; }
 .declaration__line { display: block; }
 .declaration__line + .declaration__line { margin-top: 0.62em; }
 
-/* The rose: drawn in fine line, the same on every phone (an emoji is not).
-   The 🌹 character is still in the text for screen readers and copy-paste. */
+/* The rose: a small oil-pastel drawing (SVG, see tools/make_rose.py),
+   the same on every phone. The 🌹 character is still in the text, hidden,
+   for screen readers and copy-paste. */
 .rose {
   display: block;
-  width: 27px;
-  margin: 2.4rem auto 0;
+  width: 52px;
+  margin: 2.6rem auto 0;
   line-height: 0;
+  --rose-pace: 0.8; /* 1 = original timing; lower = faster */
 }
 .rose__art {
   display: block;
-  width: 27px;
-  height: 64px;
+  width: 52px;
+  height: 125px;
   overflow: visible;
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.rose__stem  { stroke: #8f959d; stroke-width: 1.35; }
-.rose__bloom { stroke: #b97880; stroke-width: 1.35; } /* a dried-rose red, the page's only colour */
-.rose__fine  { stroke-width: 0.85; }
 .rose__art path { stroke-dasharray: 1; stroke-dashoffset: 0; }
 
 .signature {
@@ -423,9 +451,9 @@ img { display: block; max-width: 100%; height: auto; }
   gap: 1rem;
 }
 .signature__mark {
-  width: 28px;
-  height: 28px;
-  opacity: 0.85;
+  width: 24px;
+  height: 24px;
+  opacity: 0.6; /* last in the hierarchy: declaration, rose, name, moon */
 }
 .signature__name {
   font-style: italic;
@@ -462,15 +490,14 @@ img { display: block; max-width: 100%; height: auto; }
 .js .finale.is-visible .rose { transition-delay: 3s; transform: none; }
 .js .rose { filter: none; } /* blur would muddy hairlines */
 
-/* each stroke of the rose draws itself, stem first, bloom last */
+/* each pastel stroke draws itself: stem, then leaves, then petals */
 .js .rose__art path {
   stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1.3s var(--ease-soft);
+  transition: stroke-dashoffset calc(var(--t, 0.3) * var(--rose-pace) * 1s) cubic-bezier(0.45, 0, 0.25, 1);
 }
-.js .rose__art .rose__long { transition-duration: 1.8s; }
 .js .finale.is-visible .rose__art path {
   stroke-dashoffset: 0;
-  transition-delay: calc(3.2s + var(--d, 0) * 1s);
+  transition-delay: calc(3s + var(--d, 0) * var(--rose-pace) * 1s);
 }
 
 /* very short screens (landscape phones): let the intro scroll instead of crushing it */

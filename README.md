@@ -17,11 +17,14 @@ a-little-universe/
 │   ├── moon-720.webp       # Lua 720×720 — escolhida automaticamente em telas menores
 │   ├── moon.jpg            # fallback para navegadores sem WebP
 │   ├── moon-mark.webp      # Lua minúscula da assinatura
+│   ├── moon-wash.webp      # aguadas de aquarela prateadas que florescem ao tocar a Lua
 │   ├── og-image.jpg        # imagem da prévia do link no WhatsApp
 │   ├── favicon.png, apple-touch-icon.png
 │   └── fonts/              # Newsreader + Hanken Grotesk (auto-hospedadas, licença OFL)
 ├── tools/
-│   └── render_moon.py      # script que gerou a imagem da Lua a partir dos dados da NASA
+│   ├── render_moon.py      # script que gerou a imagem da Lua a partir dos dados da NASA
+│   ├── make_wash.py        # script que pintou as aguadas de aquarela (moon-wash.webp)
+│   └── make_rose.py        # script que gera os traços da rosa em giz pastel oleoso
 └── README.md
 ```
 
@@ -89,8 +92,7 @@ Abra `http://localhost:8000` no computador.
 5. Espere 1–2 minutos. O link aparece no topo dessa mesma página:
    `https://SEU_USUARIO.github.io/a-little-universe/`
 
-**Ajuste da prévia do WhatsApp (importante):** o WhatsApp só mostra a imagem da prévia com URL absoluta. Em `index.html`, troque as duas ocorrências de `assets/og-image.jpg` por
-`https://SEU_USUARIO.github.io/a-little-universe/assets/og-image.jpg`, faça commit de novo e espere o Pages atualizar.
+**Prévia do WhatsApp:** o WhatsApp só mostra a imagem da prévia com URL absoluta. Ela já está apontando para `https://krebski-gabriel.github.io/Jessica-s-universe/assets/og-image.jpg`; se o endereço do site mudar, atualize `og:image` e `twitter:image` em `index.html`.
 
 > Observação: repositório público significa que o código fica visível no GitHub. O link em si não aparece em buscadores (a página tem `noindex`). Se quiser o código privado, use **Netlify Drop** (app.netlify.com/drop): arraste a pasta, e ele gera um link público na hora, sem repositório.
 
@@ -116,6 +118,7 @@ Ela não precisa instalar nada: o site abre direto no navegador do celular.
 - **Rolagem até a carta:** própria (2,2 s, suave), e qualquer toque ou rolagem dela interrompe imediatamente — nunca "briga" com o dedo.
 - **Conexão lenta:** enquanto a imagem carrega, uma silhueta discreta ocupa o lugar da Lua; quando chega, ela aparece com um fade (decodificada antes, para não "pintar aos pedaços"). O navegador escolhe sozinho entre a versão de 720 px e a de 1200 px.
 - **Imagem ausente:** se a Lua não carregar de jeito nenhum, um disco cinza sóbrio assume o lugar e a interação continua funcionando.
-- **A rosa:** desenhada em traço fino (SVG dentro do `index.html`), e não emoji, porque o 🌹 muda de aparência em cada celular. Ela se desenha sozinha, traço a traço, depois da última linha. O caractere 🌹 continua no texto, invisível, para leitores de tela e para quem copiar o poema.
+- **A rosa em giz pastel oleoso:** um SVG com ~110 traços gerados por `tools/make_rose.py`. As pétalas e folhas são preenchidas por camadas de traços que acompanham a forma, como se faz com o bastão de pastel, em rosa antigo e verde-sálvia acinzentado. Um filtro SVG (`#rose-pastel`) cria o "dente" do papel (as falhas onde o pastel pula a textura) e as bordas levemente irregulares. Ela se desenha sozinha depois da última linha: caule, folhas, pétalas, em cerca de 3,5 s. A velocidade se ajusta em `styles.css`, variável `--rose-pace`. O caractere 🌹 continua no texto, invisível, para leitores de tela e para quem copiar o poema.
+- **Aquarela ao tocar a Lua:** aguadas translúcidas prateadas (`assets/moon-wash.webp`, pintadas por `tools/make_wash.py`) ficam **atrás** da foto da Lua, então nunca cobrem as crateras. No toque, elas se espalham para fora como pigmento levado pela água (cerca de 2,5 s), ao mesmo tempo que o brilho e o halo que já existiam. Não atrasam o poema: o tempo até a carta continua igual. Para mudar a intensidade, ajuste `opacity` em `.moon.is-lit .moon__wash`.
 - **Sem música:** por decisão. Nada toca sozinho e não há botão extra na tela.
 - **Peso total da primeira tela:** ~120–270 KB de Lua + ~310 KB de fontes (em cache depois da primeira visita).
