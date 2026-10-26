@@ -5,7 +5,7 @@
    2. Moon image loading states (slow network / missing file)
    3. Starfield (sparse, almost still)
    4. Touching the moon → light → glide to the letter
-   5. Verse-by-verse reveal while reading
+   5. Stanzas are observed while reading; CSS reveals them verse by verse
    No dependencies. Everything degrades gracefully: without JavaScript the
    letter is simply shown below the moon.
    ========================================================================= */
