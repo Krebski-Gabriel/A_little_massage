@@ -26,6 +26,7 @@ ROSE_DEEP = "#7a4752"
 ROSE_MID = "#9e6871"
 ROSE_SOFT = "#b98790"
 ROSE_LIGHT = "#d6b0b5"
+ROSE_HIGHLIGHT = "#ecd3d7"  # the catch-light on the topmost curled edges
 SAGE_DEEP = "#59655c"
 SAGE = "#77857b"
 SAGE_LIGHT = "#9eaa9f"
@@ -120,23 +121,28 @@ T = 2.05  # petals begin
 # back petal (top), seen over the heart
 hatch("bloom", [(37, 45), (41.5, 37), (58.5, 37), (63, 45)],
                [(28, 41), (33, 22.5), (67, 22.5), (72, 41)],
-      14, [ROSE_MID, ROSE_SOFT], 2.6, T, 0.45, reach=(0.0, 1.0))
+      16, [ROSE_MID, ROSE_SOFT], 2.9, T, 0.45, reach=(0.0, 1.0))
 # left outer petal
 hatch("bloom", [(37, 46), (34, 52), (37, 60), (44, 66)],
                [(28, 41), (17.5, 48), (21.5, 65), (38, 73)],
-      11, [ROSE_SOFT, ROSE_LIGHT, ROSE_MID], 2.6, T + 0.40, 0.40, bend=-1.4)
+      13, [ROSE_SOFT, ROSE_LIGHT, ROSE_MID], 2.9, T + 0.40, 0.40, bend=-1.4)
 # right outer petal
 hatch("bloom", [(63, 46), (66, 52), (63, 60), (56, 66)],
                [(72, 41), (82.5, 48), (78.5, 65), (62, 73)],
-      11, [ROSE_MID, ROSE_DEEP], 2.6, T + 0.72, 0.40, bend=1.4)
+      13, [ROSE_MID, ROSE_DEEP], 2.9, T + 0.72, 0.40, bend=1.4)
+# inner-top petal: bridges the heart and the back petal, so the bloom reads
+# as a full layered rose rather than a ring with a hollow centre
+hatch("bloom", [(40, 46), (43.5, 40), (56.5, 40), (60, 46)],
+               [(35, 43.5), (39, 31), (61, 31), (65, 43.5)],
+      12, [ROSE_MID, ROSE_SOFT], 2.5, T + 0.18, 0.38, reach=(0.0, 1.0))
 # the heart: deepest colour, a little lighter where the petals curl over
 hatch("bloom", [(39, 45.5), (43, 39), (57, 39), (61, 45.5)],
                [(39, 50.5), (44, 57.5), (56, 57.5), (61, 50.5)],
-      12, [ROSE_DEEP, ROSE_DEEP, ROSE_MID], 2.3, T + 1.05, 0.30, reach=(0.0, 1.0), each=0.14)
+      14, [ROSE_DEEP, ROSE_DEEP, ROSE_MID], 2.5, T + 1.05, 0.30, reach=(0.0, 1.0), each=0.14)
 # front petal, cupping everything
 hatch("bloom", [(34, 53), (42, 59.5), (58, 59.5), (66, 53)],
                [(38, 71), (44, 77.5), (56, 77.5), (62, 71)],
-      13, [ROSE_SOFT, ROSE_MID, ROSE_SOFT], 2.7, T + 1.30, 0.45, bend=0.8)
+      15, [ROSE_SOFT, ROSE_MID, ROSE_SOFT], 3.0, T + 1.30, 0.45, bend=0.8)
 
 # accents: the spiral of the heart, the lit lip, a few defining edges
 A = T + 1.80
@@ -147,6 +153,10 @@ line("bloom", "M28.4 41.5 C33.5 23.5, 66.5 23.5, 71.6 41.5", ROSE_DEEP, 0.9, A +
 line("bloom", "M72 41.5 C83 48, 79.5 65.5, 62 73", ROSE_DEEP, 1.0, A + 0.45, 0.30, 0.75)
 line("bloom", "M37.5 72.2 C44 78.2, 56 78.2, 62.5 72.2", ROSE_DEEP, 1.0, A + 0.50, 0.25, 0.8)
 line("bloom", "M27 43 C24.5 41.5, 23.6 39, 24.4 36.4", ROSE_LIGHT, 1.3, A + 0.55, 0.20, 0.8)
+# catch-light: a couple of pale, broken highlights where the curl faces the
+# light, the detail that gives the bloom some shine instead of reading flat
+line("bloom", "M35.5 25.5 C42 23, 51 22.3, 58.5 23.3", ROSE_HIGHLIGHT, 1.0, A + 0.65, 0.22, 0.6)
+line("bloom", "M21.5 49 C20.3 54.5, 21.8 60, 26 65", ROSE_HIGHLIGHT, 0.9, A + 0.72, 0.20, 0.55)
 
 
 def emit():
