@@ -1,4 +1,9 @@
 <!doctype html>
+<!--
+  EXPERIMENT — "Autumn leaves".
+  Same page as index.html, plus: autumn.css, autumn.js, assets/autumn/*.
+  index.html is untouched; delete this file (and those) to undo.
+-->
 <html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
@@ -31,11 +36,14 @@
   <link rel="preload" as="font" href="assets/fonts/newsreader-italic.woff2" type="font/woff2" crossorigin>
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="autumn.css">
   <script>document.documentElement.classList.replace('no-js', 'js');</script>
 </head>
 <body>
   <!-- Very sparse starfield, drawn by script.js. Purely decorative. -->
   <canvas class="sky" aria-hidden="true"></canvas>
+  <!-- Falling leaves behind the words (autumn.js). -->
+  <canvas class="leaves leaves--back" aria-hidden="true"></canvas>
 
   <main>
     <!-- ============ 1. Beginning ============ -->
@@ -267,9 +275,21 @@
             </g>
           </svg></span>
       </section>
+
+      <!-- The ground of dry leaves the letter ends on. Three moments of the
+           same pile, faded in one after the other by autumn.js. -->
+      <div class="ground" aria-hidden="true">
+        <img class="ground__layer ground__layer--1" src="assets/autumn/floor-1.webp" width="1800" height="560" alt="" loading="lazy" decoding="async">
+        <img class="ground__layer ground__layer--2" src="assets/autumn/floor-2.webp" width="1800" height="560" alt="" loading="lazy" decoding="async">
+        <img class="ground__layer ground__layer--3" src="assets/autumn/floor-3.webp" width="1800" height="560" alt="" loading="lazy" decoding="async">
+      </div>
     </article>
   </main>
 
+  <!-- A few large, out-of-focus leaves in front of everything (wide screens only). -->
+  <canvas class="leaves leaves--front" aria-hidden="true"></canvas>
+
   <script src="script.js" defer></script>
+  <script src="autumn.js" defer></script>
 </body>
 </html>
