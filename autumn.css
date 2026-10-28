@@ -1,0 +1,74 @@
+/* =========================================================================
+   Autumn — experimental layer on top of styles.css (used only by autumn.html)
+   -------------------------------------------------------------------------
+   1. Falling-leaf canvases   (drawn by autumn.js)
+   2. The ground of leaves    (assets/autumn/floor-1..3.webp, stacked)
+   3. The rose standing on the ground
+   Remove this file and autumn.js / autumn.html to undo the experiment.
+   ========================================================================= */
+
+/* 1. Two canvases: one behind the words, one (rare, large, out of focus
+      leaves, only at the edges of wide screens) in front of everything. */
+.leaves {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.leaves--back  { z-index: 0; }   /* above the stars, below the page (main is z 1) */
+.leaves--front { z-index: 3; }
+
+/* 2. The ground at the very end of the letter. The three images are the
+      same pile at three moments; autumn.js fades them in one after the
+      other as she nears the end (--g1..--g3, 0 → 1). */
+.ground {
+  /* tall enough to read as a ground, never more than ~40 % of the screen
+     (landscape phones keep the declaration in view) */
+  --ground-h: min(470px, 40vh, max(190px, 31.1vw));
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: var(--ground-h);
+  margin-left: calc(50% - 50vw);
+  /* the rose's stem rests among the first leaves of the pile */
+  margin-top: calc(var(--ground-h) * -0.29);
+  pointer-events: none;
+}
+.ground__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0;
+}
+.js .ground__layer--1 { opacity: var(--g1, 0); }
+.js .ground__layer--2 { opacity: var(--g2, 0); }
+.js .ground__layer--3 { opacity: var(--g3, 0); }
+
+/* the letter now ends on the ground, not on black space */
+.letter { padding-bottom: 0; }
+
+/* 3. The declaration and the rose stay above the ground… */
+.finale { position: relative; z-index: 2; }
+
+/* …and the rose casts a soft contact shadow where its stem meets the leaves */
+.rose { position: relative; }
+.rose::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 46px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.75), transparent);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .ground__layer { opacity: 1; }
+  .leaves { display: none; }
+}
